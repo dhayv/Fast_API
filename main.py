@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+
 class Item(BaseModel):
     text: str
     is_done: bool = False
@@ -10,11 +11,13 @@ class Item(BaseModel):
 
 items = []
 
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
-@app.post('/items')
+
+@app.post("/items")
 def create_item(item: Item):
     items.append(item)
     return items
@@ -24,7 +27,8 @@ def create_item(item: Item):
 def list_items(limit: int = 10):
     return items[0:limit]
 
-@app.get('/items/{item_id}', response_model=Item)
+
+@app.get("/items/{item_id}", response_model=Item)
 def get_item(item_id: int) -> Item:
     if item_id < len(items):
         return items[item_id]
